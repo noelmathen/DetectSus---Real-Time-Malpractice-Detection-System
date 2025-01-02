@@ -1,0 +1,5 @@
+train: C:\Users\noelm\Documents\PROJECTS\YOLO\4. Student-Teacher-Object-Detection\combined_dataset\images\train
+val: C:\Users\noelm\Documents\PROJECTS\YOLO\4. Student-Teacher-Object-Detection\combined_dataset\images\val
+
+nc: 2
+names: ['teacher', 'student']
