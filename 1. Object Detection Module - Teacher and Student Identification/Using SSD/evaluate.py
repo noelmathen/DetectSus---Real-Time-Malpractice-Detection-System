@@ -86,4 +86,3 @@ def evaluate_p_r_f1(model, data_loader, device, iou_threshold=0.5, score_thresho
     f1 = 2 * (precision * recall) / (precision + recall + 1e-6)
     
     return precision, recall, f1
-

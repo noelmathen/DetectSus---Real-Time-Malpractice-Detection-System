@@ -18,12 +18,24 @@ def load_ssd_model(weights_path, num_classes=3, device="cuda"):
     model.eval()
     return model
 
-def run_inference_on_video(model, video_path, device="cuda", score_threshold=0.5, show_video=True):
+def run_inference_on_video(model, video_path, output_path, device="cuda", score_threshold=0.5):
+    """
+    Runs inference on a single video, writes output to a new video file.
+    """
     cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
         print(f"Cannot open {video_path}")
         return
     
+    # Get video properties
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    
+    # Prepare VideoWriter to save output
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # or 'XVID' for .avi
+    out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
+
     transform = T.ToTensor()  # For converting frames to [C,H,W] float in [0..1]
     
     while True:
@@ -60,13 +72,12 @@ def run_inference_on_video(model, video_path, device="cuda", score_threshold=0.5
             cv2.putText(frame, text, (x1, y1 - 5), 
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
         
-        if show_video:
-            cv2.imshow("SSD Video Inference", frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+        # Write the frame to the output video
+        out.write(frame)
     
     cap.release()
-    cv2.destroyAllWindows()
+    out.release()
+    print(f"Saved processed video to {output_path}")
 
 def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -78,8 +89,10 @@ def main():
     
     for vf in video_files:
         video_path = os.path.join(video_folder, vf)
-        print(f"Running inference on {video_path}")
-        run_inference_on_video(model, video_path, device=device)
+        output_path = os.path.join("output_videos", f"processed_{vf}")
+        os.makedirs("output_videos", exist_ok=True)
+        print(f"Processing {video_path} -> {output_path}")
+        run_inference_on_video(model, video_path, output_path, device=device)
 
 if __name__ == "__main__":
     main()
