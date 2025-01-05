@@ -2,6 +2,7 @@ __pycache__/
 exam_footages
 Exam Footages
 combined_dataset/
-runs/
+runs*
 .vscode/
-output_videos/
+output_videos*
+fast_rcnn_model.pth

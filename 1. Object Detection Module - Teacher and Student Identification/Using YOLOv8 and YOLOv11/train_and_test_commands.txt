@@ -1,0 +1,5 @@
+TRAINING:
+yolo task=detect mode=train model=yolov11n.pt data=dataset.yaml epochs=100 batch=16 imgsz=640 device=0 workers=32
+
+TESTING:
+yolo task=detect mode=predict model="C:\Users\noelm\Documents\PROJECTS\DetectSus - Real Time Malpractice Detection System\1. Object Detection Module - Teacher and Student Identification\Using YOLOv8\best_v11_100e.pt" source="C:\Users\noelm\Documents\PROJECTS\DetectSus - Real Time Malpractice Detection System\1. Object Detection Module - Teacher and Student Identification\Using YOLOv8\exam_footages" show_conf=False
