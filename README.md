@@ -1,7 +1,3 @@
-Based on your project details and the repository structure, here's a suggested **README.md** for your GitHub repository:
-
----
-
 # DetectSus - Real-Time Malpractice Detection System
 
 DetectSus is a computer vision-based project designed to enhance examination integrity by leveraging object detection and behavior analysis. The system aims to detect suspicious behaviors and activities in classroom exam settings, using advanced machine learning models for real-time monitoring and alerting.
